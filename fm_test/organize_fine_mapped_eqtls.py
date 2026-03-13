@@ -69,6 +69,13 @@ def extract_variant_gene_pair_info(raw_fine_mapping_file, tissue_name_to_index, 
 		gene_id = data[11]
 		posterior_effect = float(data[-2])
 
+		var_info = variant_id.split('_')
+		if var_info[2] != data[5] or var_info[3] != data[6]:
+			variant_id = var_info[0] + '_' + var_info[1] + '_' + data[5] + '_' + data[6] + '_b38'
+
+		if len(data[5]) != 1 or len(data[6]) != 1:
+			continue
+
 		vg_pair = variant_id + ':' + gene_id
 		if vg_pair not in dicti:
 			dicti[vg_pair] = np.asarray([np.nan]*n_tiss)

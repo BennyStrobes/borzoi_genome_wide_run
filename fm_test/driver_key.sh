@@ -43,24 +43,50 @@ output_root="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/fine_m
 
 processed_fm_results_dir=${output_root}"processed_fine_mapped_data/"
 
-
+borzoi_fm_pred_default_dir=${output_root}"borzoi_fm_pred_default_code/"
 
 
 
 #################
 # Run code
 #################
+# Re-organize fine-mapped eQTL results
+cross_tissue_fine_mapping_summary_file=${processed_fm_results_dir}"fine_mapping_summary.txt"
+if false; then
 source ~/.bashrc
 conda activate borzoi
-cross_tissue_fine_mapping_summary_file=${processed_fm_results_dir}"fine_mapping_summary.txt"
 python organize_fine_mapped_eqtls.py $raw_fine_mapping_file $cross_tissue_fine_mapping_summary_file $gtex_v8_expression_dir
+fi
+
+
+# convert to vcf
+fm_variant_vcf_file=${processed_fm_results_dir}"fine_mapping_variant_vcf.txt"
+if false; then
+source ~/.bashrc
+conda activate borzoi
+python convert_fm_eqtls_to_variant_vcf.py $cross_tissue_fine_mapping_summary_file $fm_variant_vcf_file
+fi
+small_fm_variant_vcf_file=${processed_fm_results_dir}"fine_mapping_variant_vcf_small.txt"
+
+
+model_num="0"
+if false; then
+sbatch borzoi_sed.sh $borzoi_fm_pred_default_dir"model_"${model_num}"_"${split_number} ${small_fm_variant_vcf_file} $borzoi_training_dir $model_num
+fi
+
+
+model_num="0"
+if false; then
+sh fast_borzoi_sed.sh $borzoi_fm_pred_default_dir"model_"${model_num} ${small_fm_variant_vcf_file} $borzoi_training_dir $model_num
+fi
 
 
 
+echo "CONSIDER RUNNING WITH GTEX fasta!"
 
 
-
-
-
-
-
+if false; then
+source ~/.bashrc
+conda activate borzoi
+python compare_results.py $borzoi_fm_pred_default_dir"model_"${model_num}
+fi
