@@ -33,10 +33,7 @@ def extract_ordered_list_of_all_variant_ids_on_this_chromosome(gtex_sumstats_dir
 			dist_col = table['tss_distance']
 			af_col = table['af']
 
-			mask = pc.and_kleene(
-				pc.and_kleene(pc.greater_equal(af_col, 0.05), pc.less_equal(af_col, 0.95)),
-				pc.less_equal(pc.abs(dist_col), 100000)
-			)
+			mask = pc.less_equal(pc.abs(dist_col), 100000)
 
 			filt = table.filter(mask)
 
@@ -141,4 +138,3 @@ t.close()
 # Make variant vcf file
 vcf_file = variant_output_stem + 'all_variant.vcf'
 make_variant_vcf_file(variant_gene_pair_file, vcf_file)
-

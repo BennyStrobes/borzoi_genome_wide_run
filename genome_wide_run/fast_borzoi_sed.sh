@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --gpus 1                             # Request one core
-#SBATCH -t 0-100:30                         # Runtime in D-HH:MM format
+#SBATCH -t 0-120:30                         # Runtime in D-HH:MM format
 #SBATCH -p bch-gpu                           # Partition to run in
 #SBATCH --mem=21GB  
 

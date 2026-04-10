@@ -739,12 +739,15 @@ def main():
 		#for si, snp in tqdm(enumerate(snps), total=len(snps)):
 		prev_time = time.time()
 		for ii in range(0, len(snps), int(options.batch_size)):
-			#cur_time = time.time()
-			#print('########')
-			#print(cur_time-prev_time)
-			#prev_time = cur_time
-			if np.mod(ii, 1000) == 0 and ii > 2000:
-				t.flush()
+			cur_time = time.time()
+			#print('########', flush=True)
+			#print(ii, flush=True)
+			#print(cur_time-prev_time, flush=True)
+			delta = cur_time - prev_time
+			prev_time = cur_time
+			if np.mod(ii, 100) == 0 and ii > 0:
+				print(str(ii) + ' : ' + str(delta), flush=True)
+				#t.flush()
 			# Get batch of snps
 			snp_batch = snps[ii : ii + int(options.batch_size)]
 

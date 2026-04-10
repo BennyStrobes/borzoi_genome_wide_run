@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -t 0-8:30                         # Runtime in D-HH:MM format
+#SBATCH -t 0-5:30                         # Runtime in D-HH:MM format
 #SBATCH -p bch-compute                        # Partition to run in
 #SBATCH --mem=10GB 
 
@@ -14,12 +14,12 @@ gtex_v10_pc_genes_gtf="${4}"
 source ~/.bashrc
 conda activate borzoi
 
-
+if false; then
 python extract_variant_gene_pairs_to_test.py $eqtl_sumstats_dir $variant_gene_pair_file $variant_output_stem $gtex_v10_pc_genes_gtf
-
+fi
 
 vcf_file=$variant_output_stem"all_variant.vcf"
-split -n l/20 -d --additional-suffix=.vcf "$vcf_file" ${variant_output_stem}chunked_variants_
+split -n l/30 -d --additional-suffix=.vcf "$vcf_file" ${variant_output_stem}chunked_variants_
 
 for f in ${variant_output_stem}chunked_variants_*.vcf; do
     mv "$f" "$(echo "$f" | sed 's/_0\([0-9]\.vcf\)$/_\1/')"
