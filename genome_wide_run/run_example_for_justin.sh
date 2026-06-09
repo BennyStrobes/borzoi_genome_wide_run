@@ -16,13 +16,12 @@ borzoi_training_dir="/lab-share/CHIP-Strober-e2/Public/ben/s2e_uncertainty/borzo
 gtex_v10_pc_genes_gtf="/lab-share/CHIP-Strober-e2/Public/gene_annotation_files/gencode.v39.gtex.protein_coding.genes.gtf"
 
 
-# Borzoi target fiel
+# Borzoi target file
 borzoi_target_file="/lab-share/CHIP-Strober-e2/Public/ben/s2e_uncertainty/borzoi_input_data/models/targets_human.txt"
 borzoi_gtex_target_file="/lab-share/CHIP-Strober-e2/Public/ben/s2e_uncertainty/borzoi_input_data/models/targets_gtex.txt"
 
 
 # Example variant-gene pairs
-# Output root
 example_variant_gene_dir="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/genome_wide/input_variant_gene_pairs/"
 example_variant_gene_pair_file=${example_variant_gene_dir}"variant_gene_pairs_to_test.txt"
 existing_variant_vcf_file=$example_variant_gene_dir"variants_to_test_chunked_variants_0.vcf"
