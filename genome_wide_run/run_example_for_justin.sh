@@ -1,4 +1,9 @@
 
+# You need to be on a GPU to run this
+# To get interactively on a GPU enter the following command:
+# srun -p bch-gpu --gpus 1 --mem 10G -t 0-03:00 --pty bash
+
+
 #####################
 # Input data
 #####################
