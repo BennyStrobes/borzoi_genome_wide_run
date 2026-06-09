@@ -1,4 +1,8 @@
 
+#####################
+# Input data
+#####################
+
 # Directory containing pre-trained borzoi models
 borzoi_training_dir="/lab-share/CHIP-Strober-e2/Public/ben/s2e_uncertainty/borzoi_input_data/models/"
 
