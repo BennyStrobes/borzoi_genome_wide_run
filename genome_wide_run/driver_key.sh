@@ -50,6 +50,15 @@ conda activate borzoi
 python process_borzoi_target_files_for_gtex_only_targets.py $borzoi_target_file $borzoi_gtex_only_target_file $gtex_sample_attributes_file
 fi
 
+borzoi_non_gtex_target_file=${borzoi_pred_dir}"targets_interesting_non_gtex_ordered.txt"
+if false; then
+
+source ~/.bashrc
+conda activate borzoi
+python process_borzoi_target_files_for_non_gtex_targets.py $borzoi_target_file $borzoi_non_gtex_target_file
+fi
+
+
 model_num="0"
 if false; then
 for chunk_num in {0..29}
@@ -73,6 +82,27 @@ do
 	sbatch subset_h5_file_to_gtex_only.sh ${borzoi_full_h5_file} ${borzoi_gtex_only_h5_file} ${borzoi_gtex_only_target_file} ${chunk_num}
 done
 fi
+
+
+
+model_num="0"
+if false; then
+for chunk_num in {0..29}
+do
+	borzoi_full_h5_file=$borzoi_pred_dir"model_"${model_num}"_chunk_"${chunk_num}"_borzoi_results.h5"
+	borzoi_non_gtex_h5_file=$borzoi_pred_dir"model_"${model_num}"_chunk_"${chunk_num}"_borzoi_non_gtex_interesting_results.h5"
+	sbatch subset_h5_file_to_gtex_only.sh ${borzoi_full_h5_file} ${borzoi_non_gtex_h5_file} ${borzoi_non_gtex_target_file} ${chunk_num}
+done
+fi
+
+
+
+
+
+
+
+
+
 
 
 

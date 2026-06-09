@@ -739,6 +739,7 @@ def main():
 		#for si, snp in tqdm(enumerate(snps), total=len(snps)):
 		prev_time = time.time()
 		for ii in range(0, len(snps), int(options.batch_size)):
+			print(ii)
 			cur_time = time.time()
 			#print('########', flush=True)
 			#print(ii, flush=True)
