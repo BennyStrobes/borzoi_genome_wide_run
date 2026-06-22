@@ -27,6 +27,11 @@ example_variant_gene_pair_file=${example_variant_gene_dir}"variant_gene_pairs_to
 existing_variant_vcf_file=$example_variant_gene_dir"variants_to_test_chunked_variants_0.vcf"
 
 
+fasta_file="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/input_data/hg38.fa"
+
+gene_anno_file="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/input_data/gencode41_basic_nort.gtf"
+
+
 #####################
 # Output data
 #####################
