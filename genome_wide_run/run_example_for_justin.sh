@@ -44,12 +44,13 @@ output_root="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/genome
 #####################
 # Make small, example vcf containing 500 variants to run Borzoi for
 example_variant_vcf_file=$output_root"example_variants.vcf"
+if false; then
 head -1000 $existing_variant_vcf_file > $example_variant_vcf_file
 
 ######################
 # Display first 10 lines of vcf
 head -10 $example_variant_vcf_file
-
+fi
 
 
 ######################
@@ -64,9 +65,18 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
 # Location/name of file to write results to 
 output_file=${output_root}"example_output2.h5"
 
-# Run Borzoi on variants in $example_variant_vcf_file, while further limiting to variant-gene pairs found in ${example_variant_gene_pair_file}
-python "fast_borzoi_sed.py" -o ${output_file} -v ${example_variant_gene_pair_file} --batch_size 4 --rc --stats logSED,refLog,altLog -t ${borzoi_gtex_target_file} ${borzoi_training_dir}"params_pred.json" ${borzoi_training_dir}"model0_best_f3c0.h5" $example_variant_vcf_file
 
+echo $example_variant_gene_pair_file
+echo $borzoi_gtex_target_file
+echo ${borzoi_training_dir}"params_pred.json"
+echo ${borzoi_training_dir}"model0_best_f3c0.h5"
+echo $example_variant_vcf_file
+
+
+# Run Borzoi on variants in $example_variant_vcf_file, while further limiting to variant-gene pairs found in ${example_variant_gene_pair_file}
+if false; then
+python "fast_borzoi_sed.py" -o ${output_file} -v ${example_variant_gene_pair_file} --batch_size 4 --rc --stats logSED,refLog,altLog -t ${borzoi_gtex_target_file} ${borzoi_training_dir}"params_pred.json" ${borzoi_training_dir}"model0_best_f3c0.h5" $example_variant_vcf_file
+fi
 
 
 

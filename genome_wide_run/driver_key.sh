@@ -59,6 +59,14 @@ python process_borzoi_target_files_for_non_gtex_targets.py $borzoi_target_file $
 fi
 
 
+borzoi_all_target_file=${borzoi_pred_dir}"targets_all_ordered.txt"
+if false; then
+source ~/.bashrc
+conda activate borzoi
+python process_borzoi_target_files_for_all_targets.py $borzoi_target_file $borzoi_all_target_file
+fi
+
+
 model_num="0"
 if false; then
 for chunk_num in {0..29}
