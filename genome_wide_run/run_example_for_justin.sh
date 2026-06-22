@@ -29,7 +29,7 @@ existing_variant_vcf_file=$example_variant_gene_dir"variants_to_test_chunked_var
 
 fasta_file="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/input_data/hg38.fa"
 
-gene_anno_file="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/input_data/gencode41_basic_nort.gtf"
+gene_gtf_file="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/input_data/gencode41_basic_nort.gtf"
 
 
 #####################
@@ -80,7 +80,7 @@ echo $example_variant_vcf_file
 
 # Run Borzoi on variants in $example_variant_vcf_file, while further limiting to variant-gene pairs found in ${example_variant_gene_pair_file}
 if false; then
-python "fast_borzoi_sed.py" -o ${output_file} -v ${example_variant_gene_pair_file} --batch_size 4 --rc --stats logSED,refLog,altLog -t ${borzoi_gtex_target_file} ${borzoi_training_dir}"params_pred.json" ${borzoi_training_dir}"model0_best_f3c0.h5" $example_variant_vcf_file
+python "fast_borzoi_sed.py" -o ${output_file} -v ${example_variant_gene_pair_file} --batch_size 4 --rc --stats logSED,refLog,altLog -f ${fasta_file} -g ${gene_gtf_file} -t ${borzoi_gtex_target_file} ${borzoi_training_dir}"params_pred.json" ${borzoi_training_dir}"model0_best_f3c0.h5" $example_variant_vcf_file
 fi
 
 
