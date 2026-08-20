@@ -12,6 +12,7 @@ gtex_v10_pc_genes_gtf="/lab-share/CHIP-Strober-e2/Public/gene_annotation_files/g
 
 # Borzoi target file
 borzoi_gtex_only_target_file="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/genome_wide/borzoi_predictions/targets_gtex_only_ordered.txt"
+borzoi_fibroblast_only_target_file="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/genome_wide/borzoi_predictions/targets_fibroblast_only_ordered.txt"
 
 # Variant vcf file
 variant_vcf_file="/lab-share/CHIP-Strober-e2/Public/ben/borzoi_genome_wide_run/dietlein_analysis/input_variant_gene_pairs/sarc_col31_test_hg38.vcf"
@@ -42,29 +43,26 @@ fi
 
 
 
-
-
 model_num="0"
+borzoi_full_h5_file=$borzoi_pred_dir"model_"${model_num}"dietlein_analysis_borzoi_results.h5"
+borzoi_fibroblast_only_h5_file=$borzoi_pred_dir"model_"${model_num}"dietlein_analysis_borzoi_fibroblast_only_results.h5"
 if false; then
-for chunk_num in {0..29}
-do
-	borzoi_full_h5_file=$borzoi_pred_dir"model_"${model_num}"_chunk_"${chunk_num}"_borzoi_results.h5"
-	borzoi_gtex_only_h5_file=$borzoi_pred_dir"model_"${model_num}"_chunk_"${chunk_num}"_borzoi_gtex_only_results.h5"
-	sbatch subset_h5_file_to_gtex_only.sh ${borzoi_full_h5_file} ${borzoi_gtex_only_h5_file} ${borzoi_gtex_only_target_file} ${chunk_num}
-done
+sh subset_h5_file_to_specified_indices.sh ${borzoi_full_h5_file} ${borzoi_fibroblast_only_h5_file} ${borzoi_fibroblast_only_target_file}
+fi
+
+if false; then
+# Make tsv file where each row is a variant-gene pair along with predicted effects
+borzoi_fibroblast_only_effects_tsv_file=$borzoi_pred_dir"model_"${model_num}"dietlein_analysis_borzoi_fibroblast_only_variant_gene_effects.tsv"
+sh convert_h5_file_to_variant_gene_effects_tsv.sh ${borzoi_fibroblast_only_h5_file} ${borzoi_fibroblast_only_target_file} ${borzoi_fibroblast_only_effects_tsv_file}
+
+# Filter tsv to variant-gene pairs for COL1A2 (ENSG00000164692) and COL3A1 (ENSG00000168542)
+borzoi_fibroblast_only_COL1A2_COL3A1_effects_tsv_file=$borzoi_pred_dir"model_"${model_num}"dietlein_analysis_borzoi_fibroblast_only_COL1A2_COL3A1_only_variant_gene_effects.tsv"
+python filter_variant_gene_effects_tsv_to_specified_genes.py ${borzoi_fibroblast_only_effects_tsv_file} ${borzoi_fibroblast_only_COL1A2_COL3A1_effects_tsv_file} "ENSG00000164692.19,ENSG00000168542.16"
 fi
 
 
 
-model_num="0"
-if false; then
-for chunk_num in {0..29}
-do
-	borzoi_full_h5_file=$borzoi_pred_dir"model_"${model_num}"_chunk_"${chunk_num}"_borzoi_results.h5"
-	borzoi_non_gtex_h5_file=$borzoi_pred_dir"model_"${model_num}"_chunk_"${chunk_num}"_borzoi_non_gtex_interesting_results.h5"
-	sbatch subset_h5_file_to_gtex_only.sh ${borzoi_full_h5_file} ${borzoi_non_gtex_h5_file} ${borzoi_non_gtex_target_file} ${chunk_num}
-done
-fi
+
 
 
 
