@@ -61,7 +61,7 @@ python filter_variant_gene_effects_tsv_to_specified_genes.py ${borzoi_fibroblast
 fi
 
 
-
+if false; then
 model_num="0"
 borzoi_full_h5_file=$borzoi_pred_dir"model_"${model_num}"dietlein_analysis_borzoi_results.h5"
 borzoi_other_cell_types_only_h5_file=$borzoi_pred_dir"model_"${model_num}"dietlein_analysis_borzoi_other_cell_types_only_results.h5"
@@ -76,7 +76,7 @@ sh convert_h5_file_to_variant_gene_effects_tsv.sh ${borzoi_other_cell_types_only
 # Filter tsv to variant-gene pairs for COL1A2 (ENSG00000164692) and COL3A1 (ENSG00000168542)
 borzoi_other_cell_types_only_COL1A2_COL3A1_effects_tsv_file=$borzoi_pred_dir"model_"${model_num}"dietlein_analysis_borzoi_other_cell_types_only_COL1A2_COL3A1_only_variant_gene_effects.tsv"
 python filter_variant_gene_effects_tsv_to_specified_genes.py ${borzoi_other_cell_types_only_effects_tsv_file} ${borzoi_other_cell_types_only_COL1A2_COL3A1_effects_tsv_file} "ENSG00000164692.19,ENSG00000168542.16"
-
+fi
 
 
 
