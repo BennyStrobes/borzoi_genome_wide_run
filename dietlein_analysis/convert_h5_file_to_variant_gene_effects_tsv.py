@@ -9,10 +9,21 @@ ROW_CHUNK_SIZE = 1024
 
 def load_target_names_and_h5_columns(borzoi_target_file, n_h5_targets):
 	targets_df = pd.read_csv(borzoi_target_file, sep="\t", index_col=0)
-	if "identifier" in targets_df.columns:
-		names = targets_df["identifier"].astype(str).to_numpy()
+	identifier_column = None
+	for column_name in ("identifier", "target_identifier"):
+		if column_name in targets_df.columns:
+			identifier_column = column_name
+	if identifier_column is not None:
+		names = targets_df[identifier_column].astype(str).to_numpy()
 	else:
 		names = targets_df.iloc[:, 0].astype(str).to_numpy()
+	description_column = None
+	for column_name in ("description", "target_description"):
+		if column_name in targets_df.columns:
+			description_column = column_name
+	if description_column is not None:
+		descriptions = targets_df[description_column].astype(str).to_numpy()
+		names = [name + "_" + description for name, description in zip(names, descriptions)]
 	names = [name.replace(" ", "_") for name in names]
 
 	if targets_df.shape[0] == n_h5_targets:

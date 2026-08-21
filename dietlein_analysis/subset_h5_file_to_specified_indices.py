@@ -54,9 +54,15 @@ def copy_dataset(source_dataset, destination_h5, gtex_target_indices):
 			shape=output_shape,
 			**kwargs,
 		)
+		# h5py fancy indexing requires increasing indices, so read sorted and
+		# permute columns back to the target-file row order afterwards
+		sort_order = np.argsort(gtex_target_indices)
+		sorted_target_indices = gtex_target_indices[sort_order]
+		unsort_order = np.argsort(sort_order)
 		for row_start in range(0, source_dataset.shape[0], ROW_CHUNK_SIZE):
 			row_end = min(row_start + ROW_CHUNK_SIZE, source_dataset.shape[0])
-			destination_dataset[row_start:row_end, :] = source_dataset[row_start:row_end, gtex_target_indices]
+			block = source_dataset[row_start:row_end, sorted_target_indices]
+			destination_dataset[row_start:row_end, :] = block[:, unsort_order]
 	else:
 		data = source_dataset[()]
 		if "chunks" in kwargs and data.ndim > 0 and kwargs["chunks"] is not None:
